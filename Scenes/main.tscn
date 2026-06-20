@@ -1,0 +1,94 @@
+[gd_scene format=3 uid="uid://cfufdfium7ws6"]
+
+[ext_resource type="Script" uid="uid://knkt7udlr1la" path="res://Scenes/main.gd" id="1_jjgbg"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_jjgbg"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bo1nx"]
+albedo_color = Color(0.6995611, 0.6128792, 0.84416443, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7u77a"]
+size = Vector3(10, 0.7, 10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jjgbg"]
+size = Vector3(10, 8, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_bo1nx"]
+size = Vector3(10, 8, 0.5)
+
+[sub_resource type="Environment" id="Environment_7u77a"]
+background_mode = 1
+background_color = Color(0.75936955, 0.8729042, 0.98967963, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8gbba"]
+albedo_color = Color(0.89190847, 0.7078407, 0.48891574, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_jjvhh"]
+material = SubResource("StandardMaterial3D_8gbba")
+size = Vector3(3, 2, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jjgbg"]
+size = Vector3(2.9936523, 2.0049438, 0.30126953)
+
+[node name="Main" type="Node3D" unique_id=793206789]
+script = ExtResource("1_jjgbg")
+
+[node name="Player" type="Node3D" parent="." unique_id=1588192301]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5581887, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player" unique_id=1149338482]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.1325111, -0.7026099, 1.890408)
+mesh = SubResource("SphereMesh_jjgbg")
+surface_material_override/0 = SubResource("StandardMaterial3D_bo1nx")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=245673900]
+transform = Transform3D(0.7071067, -0.1830127, 0.68301266, 0, 0.9659258, 0.25881904, -0.7071067, -0.1830127, 0.68301266, 18, 9, 18)
+current = true
+fov = 55.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1795111812]
+transform = Transform3D(0.49999997, -0.75000006, 0.4330127, 0, 0.49999997, 0.86602545, -0.86602545, -0.4330127, 0.24999997, 0, 0, 0)
+
+[node name="Floor" type="MeshInstance3D" parent="." unique_id=2131057596]
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 0.99999994, 0, 0, 0)
+mesh = SubResource("BoxMesh_7u77a")
+
+[node name="Wall_Back" type="MeshInstance3D" parent="." unique_id=1440144100]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.3500123, -4.749561)
+mesh = SubResource("BoxMesh_jjgbg")
+
+[node name="Wall_Left" type="MeshInstance3D" parent="." unique_id=443081970]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -4.75, 4.349, 0)
+mesh = SubResource("BoxMesh_bo1nx")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1581164755]
+environment = SubResource("Environment_7u77a")
+
+[node name="Board" type="MeshInstance3D" parent="." unique_id=1713965792]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.3639698, 4.9015613, -4.351012)
+mesh = SubResource("BoxMesh_jjvhh")
+
+[node name="Area3D" type="Area3D" parent="Board" unique_id=1737851139]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Board/Area3D" unique_id=872228441]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0061035156, 0.002532959, -0.0007324219)
+shape = SubResource("BoxShape3D_jjgbg")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1170076938]
+
+[node name="Clock" type="Label" parent="UI" unique_id=875192330]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_color = Color(0.14911404, 0.14911404, 0.14911404, 1)
+theme_override_font_sizes/font_size = 30
+text = "14:45"
+
+[node name="DateLabel" type="Label" parent="UI" unique_id=1001914760]
+offset_left = 3.0
+offset_top = 42.0
+offset_right = 43.0
+offset_bottom = 65.0
+theme_override_colors/font_color = Color(0.14901961, 0.14901961, 0.14901961, 1)
+theme_override_font_sizes/font_size = 30
+
+[connection signal="input_event" from="Board/Area3D" to="." method="_on_area_3d_input_event"]
